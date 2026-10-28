@@ -30,3 +30,6 @@ _inv.py
 _vp.py
 _chk_*.py
 _smoke_server.pid
+
+.tools/
+

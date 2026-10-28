@@ -1,0 +1,8 @@
+category_slug,category_name,sort_order,product_slug,product_name,price,stock,description,is_active
+gadgets,Gadgets,10,sticker-box,Sticker Box,29.90,80,Daily sync stickers,1
+gadgets,Gadgets,10,usb-c-hub,USB-C Hub,129.00,35,Stock refreshed overnight,1
+gadgets,Gadgets,10,mech-keyboard,Mech Keyboard,399.00,12,Hot keyboard,1
+home,Home,20,ceramic-mug,Ceramic Mug,39.00,100,Breakfast mug,1
+home,Home,20,desk-lamp,Desk Lamp,159.00,22,LED lamp,1
+lifestyle,Lifestyle,30,tote-bag,Tote Bag,69.00,50,Daily carry,1
+lifestyle,Lifestyle,30,notebook-a5,A5 Notebook,19.90,200,Stationery,1

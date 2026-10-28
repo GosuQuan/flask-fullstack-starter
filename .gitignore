@@ -32,4 +32,5 @@ _chk_*.py
 _smoke_server.pid
 
 .tools/
-
+_flask_server.pid
+_build*.py

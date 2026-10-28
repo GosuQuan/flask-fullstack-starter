@@ -30,7 +30,10 @@ def create_app() -> Flask:
     )
 
     from app.extensions import db, login_manager
+    from app.logging_util import configure_logging, register_request_logging
 
+    configure_logging(app)
+    register_request_logging(app)
     db.init_app(app)
     login_manager.init_app(app)
 

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}403 · 无权限{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>403 · 无权限</h1>
+  <p>你没有访问管理后台的权限。如需开通，请联系已有管理员。</p>
+  <p><a href="/">返回首页</a>
+    {% if current_user.is_authenticated %}
+      · <a href="{{ url_for('pages.dashboard') }}">控制台</a>
+    {% else %}
+      · <a href="{{ url_for('auth.login') }}">登录</a>
+    {% endif %}
+  </p>
+</section>
+{% endblock %}

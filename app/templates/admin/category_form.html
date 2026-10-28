@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}类目表单{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h2>{% if mode=='create' %}新建类目{% else %}编辑类目{% endif %}</h2>
+  <form method="post" class="auth-form">
+    <label>名称<input name="name" required value="{{ category.name if category else '' }}" /></label>
+    <label>Slug<input name="slug" value="{{ category.slug if category else '' }}" placeholder="可空，自动生成" /></label>
+    <label>排序<input type="number" name="sort_order" value="{{ category.sort_order if category else 0 }}" /></label>
+    <button type="submit">保存</button>
+  </form>
+</section>
+{% endblock %}

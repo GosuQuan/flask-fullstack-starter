@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}面试笔记 · Flask + DB{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Flask + 数据库 · 面试速览</h1>
+  <p>完整版见仓库 <code>docs/interview-flask-db.md</code>。下面摘几道与本项目代码直接相关的问答。</p>
+</section>
+
+<article class="card qa">
+  <h2>Q: 为什么用 <code>create_app</code> 工厂而不是全局 app？</h2>
+  <p>工厂便于测试（多次建 app、换配置）、延迟加载扩展，也方便挂多个 Blueprint。见 <code>app/__init__.py</code>。</p>
+</article>
+<article class="card qa">
+  <h2>Q: SQLAlchemy ORM 相对手写 SQL 的取舍？</h2>
+  <p>ORM 提升生产力、防注入（参数绑定）、跨库方言；复杂报表/窗口函数有时仍用手写 SQL 或 Core。本项目用 ORM 的 <code>User</code> 模型 + <code>db.session</code>。</p>
+</article>
+<article class="card qa">
+  <h2>Q: 密码为什么存 hash 而不是明文？</h2>
+  <p>库被拖库时明文直接泄露。本项目用 Werkzeug <code>generate_password_hash</code> / <code>check_password_hash</code>（见 <code>app/models/user.py</code>）。</p>
+</article>
+<article class="card qa">
+  <h2>Q: Flask-Login 的 session 里存了什么？</h2>
+  <p>通常只存 user id（通过 <code>user_loader</code> 回查）。cookie 签名依赖 <code>SECRET_KEY</code>。见 <code>login_user</code> 与 <code>load_user</code>。</p>
+</article>
+<article class="card qa">
+  <h2>Q: <code>db.create_all</code> 和迁移（Alembic）差在哪？</h2>
+  <p><code>create_all</code> 只建缺失表，不改已有列；生产应用 Flask-Migrate/Alembic 做可版本化 schema 变更。本脚手架为演示在启动时 <code>create_all</code>。</p>
+</article>
+<article class="card qa">
+  <h2>Q: 为什么选 PostgreSQL 而不是 SQLite？</h2>
+  <p>并发写、类型/约束、连接池、与生产环境一致。SQLite 适合单机原型。本项目强制 Postgres，见 <code>DATABASE_URL</code> / README。</p>
+</article>
+{% endblock %}

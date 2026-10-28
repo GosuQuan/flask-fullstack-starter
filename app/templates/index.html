@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}首页 · Flask Fullstack Starter{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Flask 前后端一体脚手架</h1>
+  <p>Blueprint + PostgreSQL + Flask-Login。同仓同域，适合本地研读与面试对照。</p>
+  {% if current_user.is_authenticated %}
+    <p class="hero-auth">已登录：<strong>{{ current_user.username }}</strong> ·
+      <a href="{{ url_for('pages.dashboard') }}">进入控制台</a></p>
+  {% else %}
+    <p class="hero-auth">
+      <a class="btn-link" href="{{ url_for('auth.register') }}">注册</a>
+      或
+      <a class="btn-link" href="{{ url_for('auth.login') }}">登录</a>
+      后可访问受保护的控制台。
+    </p>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>Demo：调用 <code>/api/hello</code></h2>
+  <div class="row">
+    <input id="nameInput" type="text" placeholder="名字（可选）" value="少权" />
+    <button id="helloBtn" type="button">请求 API</button>
+  </div>
+  <pre id="result" class="result" aria-live="polite">点击按钮后结果会出现在这里</pre>
+</section>
+{% endblock %}

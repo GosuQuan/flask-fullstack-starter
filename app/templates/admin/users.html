@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}用户管理 · 后台{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>用户管理</h1>
+  <p>
+    <a href="{{ url_for('admin.dashboard') }}">← 后台首页</a>
+    · <a href="{{ url_for('admin.user_create') }}">新建用户</a>
+  </p>
+</section>
+
+<section class="card">
+  <form method="get" action="{{ url_for('admin.users') }}" class="row search-row">
+    <input type="text" name="q" value="{{ q }}" placeholder="按用户名搜索（走 username 索引列）" />
+    <button type="submit">搜索</button>
+  </form>
+
+  <h2>用户列表（共 {{ total }}，每页 {{ page_size }}）</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th><th>用户名</th><th>管理员</th><th>注册时间</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>
+          <a href="{{ url_for('admin.user_detail', user_id=u.id) }}">{{ u.username }}</a>
+          {% if u.id == current_user.id %}<span class="badge">我</span>{% endif %}
+        </td>
+        <td>{% if u.is_admin %}<span class="badge badge-admin">是</span>{% else %}否{% endif %}</td>
+        <td class="muted">{{ u.created_at }}</td>
+        <td class="actions">
+          <a class="btn-link" href="{{ url_for('admin.user_edit', user_id=u.id) }}">编辑</a>
+          <form method="post" action="{{ url_for('admin.toggle_admin', user_id=u.id) }}" class="inline-form">
+            <button type="submit" class="btn-secondary">
+              {% if u.is_admin %}取消管理员{% else %}设为管理员{% endif %}
+            </button>
+          </form>
+          <form method="post" action="{{ url_for('admin.delete_user', user_id=u.id) }}" class="inline-form"
+                onsubmit="return confirm('确认删除用户 {{ u.username }}？');">
+            <button type="submit" class="btn-danger" {% if u.id == current_user.id %}disabled{% endif %}>删除</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="muted">无匹配用户</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if pages > 1 %}
+  <nav class="pager">
+    {% if page > 1 %}
+      <a href="{{ url_for('admin.users', page=page-1, q=q) }}">上一页</a>
+    {% endif %}
+    <span>第 {{ page }} / {{ pages }} 页</span>
+    {% if page < pages %}
+      <a href="{{ url_for('admin.users', page=page+1, q=q) }}">下一页</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</section>
+{% endblock %}

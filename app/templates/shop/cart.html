@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}购物车{% endblock %}
+{% block content %}
+<section class="hero"><h1>购物车</h1></section>
+<section class="card">
+  {% if items %}
+  <table class="data-table">
+    <thead><tr><th>商品</th><th>单价</th><th>数量</th><th>小计</th><th></th></tr></thead>
+    <tbody>
+    {% for it in items %}
+      <tr>
+        <td><a href="{{ url_for('shop.product_detail', slug=it.product.slug) }}">{{ it.product.name }}</a></td>
+        <td>¥ {{ it.product.price }}</td>
+        <td>
+          <form method="post" action="{{ url_for('shop.cart_update', item_id=it.id) }}" class="inline-form row">
+            <input type="number" name="qty" value="{{ it.quantity }}" min="0" style="max-width:5rem" />
+            <button type="submit" class="btn-secondary">更新</button>
+          </form>
+        </td>
+        <td>¥ {{ '%.2f'|format(it.product.price * it.quantity) }}</td>
+        <td>
+          <form method="post" action="{{ url_for('shop.cart_remove', item_id=it.id) }}" class="inline-form">
+            <button type="submit" class="btn-danger">移除</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <p class="price">合计：¥ {{ '%.2f'|format(total) }}</p>
+  <a class="btn-link" href="{{ url_for('shop.checkout_view') }}"><button type="button">去结算</button></a>
+  {% else %}
+  <p class="muted">购物车为空 · <a href="{{ url_for('shop.home') }}">去逛逛</a></p>
+  {% endif %}
+</section>
+{% endblock %}

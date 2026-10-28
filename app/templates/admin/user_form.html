@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{% if mode == 'create' %}新建用户{% else %}编辑用户{% endif %} · 后台{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h2>{% if mode == 'create' %}新建用户{% else %}编辑 {{ user.username }}{% endif %}</h2>
+  <form method="post" class="auth-form"
+        action="{% if mode == 'create' %}{{ url_for('admin.user_create_post') }}{% else %}{{ url_for('admin.user_edit_post', user_id=user.id) }}{% endif %}">
+    <label>
+      用户名
+      <input type="text" name="username" required minlength="3" maxlength="64"
+             value="{{ user.username if user else '' }}" autocomplete="off" />
+    </label>
+    <label>
+      密码{% if mode == 'edit' %}（留空不改）{% endif %}
+      <input type="password" name="password" {% if mode == 'create' %}required minlength="6"{% endif %}
+             autocomplete="new-password" />
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="is_admin" value="1"
+             {% if user and user.is_admin %}checked{% endif %} /> 管理员
+    </label>
+    <button type="submit">{% if mode == 'create' %}创建{% else %}保存{% endif %}</button>
+  </form>
+  <p class="form-footer"><a href="{{ url_for('admin.users') }}">返回列表</a></p>
+</section>
+{% endblock %}

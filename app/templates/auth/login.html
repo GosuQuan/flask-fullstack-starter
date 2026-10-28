@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}登录 · Flask Fullstack{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h2>登录</h2>
+  <form method="post" action="{{ url_for('auth.login', next=request.args.get('next')) }}" class="auth-form">
+    <label>
+      用户名
+      <input type="text" name="username" required autocomplete="username" autofocus />
+    </label>
+    <label>
+      密码
+      <input type="password" name="password" required autocomplete="current-password" />
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="remember" value="1" /> 记住我
+    </label>
+    <button type="submit">登录</button>
+  </form>
+  <p class="form-footer">还没有账号？<a href="{{ url_for('auth.register') }}">去注册</a></p>
+</section>
+{% endblock %}

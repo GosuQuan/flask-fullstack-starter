@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Chaos 模拟{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>异常 / Chaos 模拟</h1>
+  <p>仅管理员。详见 <code>docs/chaos-and-concurrency.md</code></p>
+</section>
+<section class="card">
+  <h2>Redis 降级</h2>
+  <form method="post" action="{{ url_for('admin_chaos.redis_down') }}" class="row">
+    <button name="enable" value="1" type="submit" class="btn-secondary">强制 Redis Down</button>
+    <button name="enable" value="0" type="submit">恢复 Redis</button>
+  </form>
+  <p><a href="{{ url_for('admin_chaos.redis_ping') }}" target="_blank">GET /admin/chaos/redis-ping</a></p>
+  <p><a href="{{ url_for('admin_chaos.db_fail') }}" target="_blank">GET /admin/chaos/db-fail</a>（模拟 DB 错误）</p>
+  <p>结账库存竞态：POST /checkout?chaos=oos</p>
+  <p>重复结账：同一 idempotency_key 提交两次</p>
+</section>
+{% endblock %}

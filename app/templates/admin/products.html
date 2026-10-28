@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}商品管理{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>商品管理</h1>
+  <p><a href="{{ url_for('admin.dashboard') }}">← 后台</a> · <a href="{{ url_for('admin_catalog.product_new') }}">新建商品</a></p>
+</section>
+<section class="card">
+  <table class="data-table">
+    <thead><tr><th>ID</th><th>名称</th><th>类目</th><th>价格</th><th>库存</th><th>上架</th><th></th></tr></thead>
+    <tbody>
+    {% for p in products %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.category.name if p.category else '-' }}</td>
+        <td>¥ {{ p.price }}</td>
+        <td>{{ p.stock }}</td>
+        <td>{{ '是' if p.is_active else '否' }}</td>
+        <td class="actions">
+          <a href="{{ url_for('admin_catalog.product_edit', pid=p.id) }}">编辑</a>
+          <form method="post" action="{{ url_for('admin_catalog.product_delete', pid=p.id) }}" class="inline-form" onsubmit="return confirm('删除？');">
+            <button class="btn-danger" type="submit">删除</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

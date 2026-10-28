@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}商城首页{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Flask Mall 演示商城</h1>
+  <p>类目 / 商品 / 购物车 / 下单（pending，无真实支付）。管理员可在后台维护。</p>
+</section>
+<section class="card">
+  <h2>类目</h2>
+  <div class="chip-row">
+    {% for c in categories %}
+      <a class="chip" href="{{ url_for('shop.category', slug=c.slug) }}">{{ c.name }}</a>
+    {% else %}
+      <span class="muted">暂无类目</span>
+    {% endfor %}
+  </div>
+</section>
+<section class="card">
+  <h2>精选商品</h2>
+  <div class="product-grid">
+    {% for p in products %}
+      <a class="product-card" href="{{ url_for('shop.product_detail', slug=p.slug) }}">
+        <div class="product-name">{{ p.name }}</div>
+        <div class="product-meta">¥ {{ p.price }} · 库存 {{ p.stock }}</div>
+      </a>
+    {% else %}
+      <p class="muted">暂无商品</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

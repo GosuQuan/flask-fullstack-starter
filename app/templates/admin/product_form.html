@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}商品表单{% endblock %}
+{% block content %}
+<section class="card form-card" style="max-width:520px">
+  <h2>{% if mode=='create' %}新建商品{% else %}编辑商品{% endif %}</h2>
+  <form method="post" class="auth-form">
+    <label>名称<input name="name" required value="{{ product.name if product else '' }}" /></label>
+    <label>Slug<input name="slug" value="{{ product.slug if product else '' }}" /></label>
+    <label>类目
+      <select name="category_id" required>
+        {% for c in categories %}
+          <option value="{{ c.id }}" {% if product and product.category_id==c.id %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>价格<input name="price" required value="{{ product.price if product else '0.00' }}" /></label>
+    <label>库存<input type="number" name="stock" value="{{ product.stock if product else 0 }}" /></label>
+    <label>描述<textarea name="description" rows="4">{{ product.description if product else '' }}</textarea></label>
+    <label>封面 URL<input name="cover_url" value="{{ product.cover_url if product and product.cover_url else '' }}" /></label>
+    <label class="checkbox"><input type="checkbox" name="is_active" value="1" {% if not product or product.is_active %}checked{% endif %} /> 上架</label>
+    <button type="submit">保存</button>
+  </form>
+</section>
+{% endblock %}

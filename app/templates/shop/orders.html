@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}我的订单{% endblock %}
+{% block content %}
+<section class="hero"><h1>我的订单</h1></section>
+<section class="card">
+  <table class="data-table">
+    <thead><tr><th>ID</th><th>状态</th><th>金额</th><th>时间</th></tr></thead>
+    <tbody>
+    {% for o in orders %}
+      <tr>
+        <td><a href="{{ url_for('shop.order_detail', order_id=o.id) }}">#{{ o.id }}</a></td>
+        <td>{{ o.status }}</td>
+        <td>¥ {{ o.total_amount }}</td>
+        <td class="muted">{{ o.created_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4" class="muted">暂无订单</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

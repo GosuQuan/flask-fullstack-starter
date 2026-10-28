@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}结算{% endblock %}
+{% block content %}
+<section class="hero"><h1>确认订单</h1><p>演示模式：下单后状态为 pending，无真实支付。</p></section>
+<section class="card">
+  {% if items %}
+  <ul>
+    {% for it in items %}
+      <li>{{ it.product.name }} × {{ it.quantity }} — ¥ {{ '%.2f'|format(it.product.price * it.quantity) }}</li>
+    {% endfor %}
+  </ul>
+  <p class="price">应付：¥ {{ '%.2f'|format(total) }}</p>
+  <form method="post">
+    <input type="hidden" name="idempotency_key" value="{{ idempotency_key }}" />
+    <button type="submit">提交订单</button>
+  </form>
+  {% else %}
+  <p class="muted">购物车为空</p>
+  {% endif %}
+</section>
+{% endblock %}

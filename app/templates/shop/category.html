@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ category.name if category else slug }} · 类目{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>{{ category.name if category else slug }}</h1>
+  <p><a href="{{ url_for('shop.home') }}">← 商城首页</a> · 共 {{ total }} 件</p>
+</section>
+<div class="product-grid">
+  {% for p in products %}
+  <a class="product-card" href="{{ url_for('shop.product_detail', slug=p.slug) }}">
+    <div class="product-name">{{ p.name }}</div>
+    <div class="product-meta">¥ {{ p.price }} · 库存 {{ p.stock }}</div>
+  </a>
+  {% else %}
+  <p class="muted">该类目暂无商品</p>
+  {% endfor %}
+</div>
+{% if pages > 1 %}
+<nav class="pager">
+  {% if page > 1 %}<a href="{{ url_for('shop.category', slug=slug, page=page-1) }}">上一页</a>{% endif %}
+  <span>{{ page }} / {{ pages }}</span>
+  {% if page < pages %}<a href="{{ url_for('shop.category', slug=slug, page=page+1) }}">下一页</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

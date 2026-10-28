@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}控制台 · Flask Fullstack{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>控制台</h1>
+  <p>此页使用 <code>@login_required</code>，未登录会被重定向到登录页。</p>
+</section>
+<section class="card">
+  <h2>当前用户</h2>
+  <dl class="kv">
+    <dt>ID</dt><dd>{{ user.id }}</dd>
+    <dt>用户名</dt><dd>{{ user.username }}</dd>
+    <dt>注册时间</dt><dd>{{ user.created_at }}</dd>
+  </dl>
+  <p class="muted">也可请求 <code>GET /api/me</code>（需已登录的 session cookie）。</p>
+</section>
+{% endblock %}
